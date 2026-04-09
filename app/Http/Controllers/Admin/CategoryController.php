@@ -61,8 +61,7 @@ class CategoryController extends Controller
      */
     public function show(string $id)
     {
-        // $post = Post::findOrFail($id);
-        // return view('posts.show' , compact('post'));
+
     }
 
     /**
@@ -80,7 +79,6 @@ class CategoryController extends Controller
     public function update(Request $request, string $id)
     {
         $category = Category::findOrFail($id);
-        //validate data
         $request->validate([
           'name_en'=>'required',
           'name_ar'=>'required',
@@ -88,10 +86,9 @@ class CategoryController extends Controller
       ]);
 
 
-      //uploads file
       $img_name = $category->image;
       if($request->hasFile('image')){
-          //delet old image
+
           File::delete(public_path('uploads/categories/'.$img_name));
           $img_name = rand().time().$request->file('image')->getClientOriginalName();
           $request->file('image')->move(public_path('uploads/categories/'),$img_name);
@@ -99,7 +96,6 @@ class CategoryController extends Controller
 
 
 
-      //Add Data to Databas
       $category->update([
           'name_en'=> $request->name_en ,
           'name_ar'=> $request->name_ar ,

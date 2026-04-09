@@ -111,6 +111,7 @@ class ProductController extends Controller
       //uploads file
       $img_name = $product->image;
       if($request->has('image')){
+          // dd('done');
           //delet old image
           File::delete(public_path('uploads/products/'.$img_name));
           $img_name = rand().time().$request->file('image')->getClientOriginalName();

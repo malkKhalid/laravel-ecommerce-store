@@ -1,3 +1,7 @@
+@php
+use App\Models\Setting;
+$settings = Setting::first();
+@endphp
 
 @extends('admin.master')
 @section('title','All Products | '.env('APP_NAME'))
@@ -11,7 +15,10 @@
         <h1 class="h3 mb-4 text-gray-800">All Products</h1>
 
         @if (session('msg'))
-            <div class="alert alert-{{session('type')}}"><h5>{{session('msg')}}</h5></div>
+            <div class="alert alert-{{session('type')}} alert-dismissible fade show  d-flex justify-content-between align-items-center " role="alert">
+                <h5>{{session('msg')}}</h5>
+                <button type="button" data-bs-dismiss="alert" aria-label="Close"  class=" btn btn-close"></button>
+            </div>
         @endif
 
         <table class="table table-hover table-striped table-bordered">
@@ -46,7 +53,7 @@
                     <td>{{$product->created_at->format('d/m/Y')}}</td>
                     <td>{{$product->updated_at->diffForhumans()}}</td>
                     <td>
-                        <a href="{{route('admin.products.show',$product->id)}}" class="btn btn-success btn-sm"> <i class="fas fa-eye"></i></a>
+                        <a target="blank" href="{{route('site.product',$product->id)}}" class="btn btn-success btn-sm"> <i class="fas fa-eye"></i></a>
                         <a href="{{route('admin.products.edit',$product->id)}}" class="btn btn-primary btn-sm"> <i class="fas fa-edit"></i></a>
                         <form class="d-inline" action="{{route('admin.products.destroy' , $product->id)}}" method="POST">
                             @csrf

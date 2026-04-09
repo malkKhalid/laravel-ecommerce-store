@@ -17,18 +17,20 @@ class SiteController extends Controller
 
     public function all_category() {
         $categories = Category::orderByDesc('id')->get();
-        return view('site.category',compact('categories'));
+        return view('site.categories',compact('categories'));
     }
 
     public function category($id) {
+        $categories = Category::orderByDesc('id')->get();
         $category =Category::findOrFail($id);
-        return view('site.category',compact('category'));
+        return view('site.category',compact('category','categories'));
     }
 
 
     public function shop() {
+        $categories = Category::orderByDesc('id')->get();
         $products = Product::orderByDesc('id')->paginate(9);
-        return view('site.products',compact('products'));
+        return view('site.products',compact('products','categories'));
     }
 
     public function product($id) {

@@ -1,6 +1,6 @@
 <?php
 return [
-    'app_name'=> 'متجر جاد',
+    'app_name'=> 'متجر ملك',
     'dashboard' =>'الرئيسية',
     'categories' =>'الأقسام',
     'all_categories' =>'جميع الأقسام',
@@ -12,7 +12,7 @@ return [
     'orders' =>'الطلبات',
     'payments' =>'المبيعات',
     'customers' =>'الزبائن',
-    'logout' =>'تسجيل خروج',
+
     'languages' =>'اللغات',
     'arabic_name' =>'الإسم بالعربي',
     'english_name' =>'الإسم بالإنجليزي',

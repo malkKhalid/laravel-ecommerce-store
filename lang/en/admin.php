@@ -12,7 +12,9 @@ return [
     'orders' =>'Orders',
     'payments' =>'Payments',
     'customers' =>'Customers',
-    'logout' =>'Logout',
+    'settings'=> 'Settings',
+    'hotel'=> 'Hotel',
+
     'languages' =>'Languages',
     'arabic_name' =>'Arabic Name',
     'english_name' =>'English Name',

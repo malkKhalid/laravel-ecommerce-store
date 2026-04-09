@@ -2,7 +2,7 @@
     <div class="col-md-6">
         <div class="mb-3">
             <label>English Name</label>
-            <input type="text" placeholder="English Name" name="name_en" class="form-control @error('name_en') is-invalid @enderror" value="{{old('name_en',$category->name_en)}}">
+            <input type="text" placeholder="English Name" name="name_en" class="form-control @error('name_en') is-invalid @enderror" value="{{old('name_en',$category->title_en)}}">
             @error('name_en')
                 <small class="invalid-feedback">{{$message}}</small>
             @enderror
@@ -11,7 +11,7 @@
     <div class="col-md-6">
         <div class="mb-3">
             <label>Arabc Name</label>
-            <input type="text" placeholder="Arabc Name" name="name_ar" class="form-control @error('name_ar') is-invalid @enderror" value="{{old('name_ar',$category->name_ar)}}">
+            <input type="text" placeholder="Arabc Name" name="name_ar" class="form-control @error('name_ar') is-invalid @enderror" value="{{old('name_ar',$category->title_ar)}}">
             @error('name_ar')
                 <small class="invalid-feedback">{{$message}}</small>
             @enderror

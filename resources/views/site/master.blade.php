@@ -1,11 +1,11 @@
+@php
+    use App\Models\Category;
+use App\Models\Setting;
+$settings = Setting::first();
+@endphp
 <!DOCTYPE html>
 
-<!--
- // WEBSITE: https://themefisher.com
- // TWITTER: https://twitter.com/themefisher
- // FACEBOOK: https://www.facebook.com/themefisher
- // GITHUB: https://github.com/themefisher/
--->
+
 
 <html lang="en">
 
@@ -13,7 +13,7 @@
 
     <!-- ** Basic Page Needs ** -->
     <meta charset="utf-8">
-    <title>Classimax | Classified Marketplace Template</title>
+    <title>@yield('title',env('APP_NAME'))</title>
 
     <!-- ** Mobile Specific Metas ** -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -47,11 +47,14 @@
 
     <header>
         <div class="container">
+
+
+
             <div class="row">
                 <div class="col-md-12">
                     <nav class="navbar navbar-expand-lg navbar-light navigation">
                         <a class="navbar-brand" href="{{route('site.index')}}">
-                            <img src="{{ asset('siteassets/images/logo.png') }}" alt="">
+                            <h1 style="color: rgb(0, 0, 0)">{{$settings->store_name}}</h1>
                         </a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -61,97 +64,55 @@
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav ml-auto main-nav ">
                                 <li class="nav-item {{ request()->routeIs('site.index') ? 'active' : '' }}">
-                                    <a class="nav-link" href="{{route('site.index')}}">Home</a>
+                                    <a class="nav-link" href="{{route('site.index')}}">{{__('site.home')}}</a>
                                 </li>
                                 <li class="nav-item {{ request()->routeIs('site.shop') ? 'active' : '' }}">
-                                    <a class="nav-link" href="{{route('site.shop')}}">Shope</a>
+                                    <a class="nav-link" href="{{route('site.shop')}}">{{__('site.shope')}}</a>
                                 </li>
                                 <li class="nav-item {{ request()->routeIs('site.all_blog') ? 'active' : '' }}">
-                                    <a class="nav-link" href="{{route('site.all_blog')}}">Blog</a>
+                                    <a class="nav-link" href="{{route('site.all_blog')}}">{{__('site.blog')}}</a>
                                 </li>
-                                {{-- <li class="nav-item dropdown dropdown-slide @@dashboard">
-                                    <a class="nav-link dropdown-toggle" data-toggle="dropdown"
-                                        href="#!">Dashboard<span><i class="fa fa-angle-down"></i></span>
-                                    </a>
 
-                                    <!-- Dropdown list -->
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item @@dashboardPage"
-                                                href="dashboard.html">Dashboard</a></li>
-                                        <li><a class="dropdown-item @@dashboardMyAds"
-                                                href="dashboard-my-ads.html">Dashboard My Ads</a></li>
-                                        <li><a class="dropdown-item @@dashboardFavouriteAds"
-                                                href="dashboard-favourite-ads.html">Dashboard Favourite Ads</a></li>
-                                        <li><a class="dropdown-item @@dashboardArchivedAds"
-                                                href="dashboard-archived-ads.html">Dashboard Archived Ads</a></li>
-                                        <li><a class="dropdown-item @@dashboardPendingAds"
-                                                href="dashboard-pending-ads.html">Dashboard Pending Ads</a></li>
-
-                                        <li class="dropdown dropdown-submenu dropright">
-                                            <a class="dropdown-item dropdown-toggle" href="#!" id="dropdown0501"
-                                                role="button" data-toggle="dropdown" aria-haspopup="true"
-                                                aria-expanded="false">Sub Menu</a>
-
-                                            <ul class="dropdown-menu" aria-labelledby="dropdown0501">
-                                                <li><a class="dropdown-item" href="index.html">Submenu 01</a></li>
-                                                <li><a class="dropdown-item" href="index.html">Submenu 02</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li> --}}
                                 <li class="nav-item dropdown dropdown-slide @@pages">
                                     <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"
                                         aria-haspopup="true" aria-expanded="false">
-                                        Categories <span><i class="fa fa-angle-down"></i></span>
+                                        {{__('admin.categories')}} <span><i class="fa fa-angle-down"></i></span>
                                     </a>
                                     <!-- Dropdown list -->
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item @@about"
-                                                href="about-us.html">About Us</a></li>
-                                        <li><a class="dropdown-item @@contact"
-                                                href="contact-us.html">Contact Us</a></li>
-                                        <li><a class="dropdown-item @@profile"
-                                                href="user-profile.html">User Profile</a></li>
-                                        <li><a class="dropdown-item @@404" href="404.html">404
-                                                Page</a></li>
-                                        <li><a class="dropdown-item @@package"
-                                                href="{{route('site.all_category')}}">All Category</a></li>
+                                        @foreach (Category::orderByDesc('id')->limit(4)->get() as $category )
+                                            <li><a class="dropdown-item @@package" href="{{route('site.category',$category->id )}}">{{$category->name_en}}</a></li>
+                                        @endforeach
+                                        <li><strong><a class="dropdown-item @@package"
+                                            href="{{route('site.all_category')}}"> <strong> {{__('admin.all_categories')}} </strong></a></strong></li>
 
                                     </ul>
                                 </li>
-                                {{-- <li class="nav-item dropdown dropdown-slide @@listing">
-                                    <a class="nav-link dropdown-toggle" href="#!" data-toggle="dropdown"
-                                        aria-haspopup="true" aria-expanded="false">
-                                        Listing <span><i class="fa fa-angle-down"></i></span>
-                                    </a>
-                                    <!-- Dropdown list -->
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item @@category"
-                                                href="category.html">Ad-Gird View</a></li>
-                                        <li><a class="dropdown-item @@listView"
-                                                href="ad-list-view.html">Ad-List View</a></li>
 
-                                        <li class="dropdown dropdown-submenu dropleft">
-                                            <a class="dropdown-item dropdown-toggle" href="#!" id="dropdown0201"
-                                                role="button" data-toggle="dropdown" aria-haspopup="true"
-                                                aria-expanded="false">Sub Menu</a>
 
-                                            <ul class="dropdown-menu" aria-labelledby="dropdown0201">
-                                                <li><a class="dropdown-item" href="index.html">Submenu 01</a></li>
-                                                <li><a class="dropdown-item" href="index.html">Submenu 02</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li> --}}
                             </ul>
                             <ul class="navbar-nav ml-auto mt-10">
                                 <li class="nav-item">
-                                    <a class="nav-link login-button" href="login.html">Login</a>
+                                    @auth
+                                    <a class="nav-link login-button"  href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    {{ __('site.logout') }}
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
+                                    @endauth
+
+                                    @guest
+                                    <a class="nav-link login-button" href="{{route('login')}}" >{{__('site.login')}}</a>
+                                    @endguest
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-white add-button" href="ad-listing.html"><i
-                                            class="fa fa-plus-circle"></i> Add Listing</a>
+
+                                <li class="nav-item {{ request()->routeIs('site.cart') ? 'active' : '' }}">
+                                    <a class="nav-link text-black" href="{{route('site.cart')}}"><i
+                                        class="fa fa-shopping-cart"></i> {{__('site.cart')}}</a>
                                 </li>
+
                             </ul>
                         </div>
                     </nav>
@@ -160,7 +121,7 @@
         </div>
     </header>
 
-    
+
 
 
     @yield('content')
@@ -179,7 +140,9 @@
                     <!-- About -->
                     <div class="block about">
                         <!-- footer logo -->
-                        <img src="{{ asset('siteassets/images/logo-footer.png') }}" alt="logo">
+                        <a  href="{{route('site.index')}}">
+                            <h1 style="color: rgb(255, 255, 255)">{{$settings->store_name}}</h1>
+                        </a>
                         <!-- description -->
                         <p class="alt-color">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
                             tempor
@@ -193,11 +156,11 @@
                     <div class="block">
                         <h4>Site Pages</h4>
                         <ul>
-                            <li><a href="dashboard-my-ads.html">My Ads</a></li>
-                            <li><a href="dashboard-favourite-ads.html">Favourite Ads</a></li>
-                            <li><a href="dashboard-archived-ads.html">Archived Ads</a></li>
-                            <li><a href="dashboard-pending-ads.html">Pending Ads</a></li>
-                            <li><a href="terms-condition.html">Terms & Conditions</a></li>
+                            <li><a href="">My Ads</a></li>
+                            <li><a href="">Favourite Ads</a></li>
+                            <li><a href="">Archived Ads</a></li>
+                            <li><a href="">Pending Ads</a></li>
+                            <li><a href="">Terms & Conditions</a></li>
                         </ul>
                     </div>
                 </div>
@@ -206,12 +169,12 @@
                     <div class="block">
                         <h4>Admin Pages</h4>
                         <ul>
-                            <li><a href="category.html">Category</a></li>
-                            <li><a href="single.html">Single Page</a></li>
-                            <li><a href="store.html">Store Single</a></li>
-                            <li><a href="single-blog.html">Single Post</a>
+                            <li><a href="">Category</a></li>
+                            <li><a href="">Single Page</a></li>
+                            <li><a href="">Store Single</a></li>
+                            <li><a href="">Single Post</a>
                             </li>
-                            <li><a href="blog.html">Blog</a></li>
+                            <li><a href="">Blog</a></li>
 
 
 
@@ -223,17 +186,17 @@
                     <!-- App promotion -->
                     <div class="block-2 app-promotion">
                         <div class="mobile d-flex  align-items-center">
-                            <a href="index.html">
+                            <a href="">
                                 <!-- Icon -->
                                 <img src="{{ asset('siteassets/images/footer/phone-icon.png') }}" alt="mobile-icon">
                             </a>
                             <p class="mb-0">Get the Dealsy Mobile App and Save more</p>
                         </div>
                         <div class="download-btn d-flex my-3">
-                            <a href="index.html"><img
+                            <a href=""><img
                                     src="{{ asset('siteassets/images/apps/google-play-store.png') }}"
                                     class="img-fluid" alt=""></a>
-                            <a href="index.html" class=" ml-3"><img
+                            <a href="" class=" ml-3"><img
                                     src="{{ asset('siteassets/images/apps/apple-app-store.png') }}" class="img-fluid"
                                     alt=""></a>
                         </div>
@@ -256,17 +219,17 @@
                                 var CurrentYear = new Date().getFullYear()
                                 document.write(CurrentYear)
                             </script>. Designed & Developed by <a class="text-white"
-                                href="https://themefisher.com">Themefisher</a>
+                                href="">{{$settings->store_name}}</a>
                         </p>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <!-- Social Icons -->
                     <ul class="social-media-icons text-center text-lg-right">
-                        <li><a class="fa fa-facebook" href="https://www.facebook.com/themefisher"></a></li>
-                        <li><a class="fa fa-twitter" href="https://www.twitter.com/themefisher"></a></li>
-                        <li><a class="fa fa-pinterest-p" href="https://www.pinterest.com/themefisher"></a></li>
-                        <li><a class="fa fa-github-alt" href="https://www.github.com/themefisher"></a></li>
+                        <li><a class="fa fa-facebook" href=""></a></li>
+                        <li><a class="fa fa-twitter" href=""></a></li>
+                        <li><a class="fa fa-pinterest-p" href=""></a></li>
+                        <li><a class="fa fa-github-alt" href=""></a></li>
                     </ul>
                 </div>
             </div>

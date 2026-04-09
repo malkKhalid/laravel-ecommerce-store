@@ -58,7 +58,7 @@
                             {{-- {{$product->user->name}} --}}
 							<li class="list-inline-item"><i class="fa fa-user-o"></i> By <a href="user-profile.html">Jadallah</a></li>
 							<li class="list-inline-item"><i class="fa fa-folder-open-o"></i> Category<a href="category.html">{{$product->category->$name}}</a></li>
-							<li class="list-inline-item"><i class="fa fa-location-arrow"></i> Location<a href="category.html">Dhaka Bangladesh</a></li>
+
 						</ul>
 					</div>
 
@@ -92,22 +92,13 @@
 								<a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home"
 								 aria-selected="true">Product Details</a>
 							</li>
-							<li class="nav-item">
-								<a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile"
-								 aria-selected="false">Specifications</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact"
-								 aria-selected="false">Reviews</a>
-							</li>
+
 						</ul>
 						<div class="tab-content" id="pills-tabContent">
 							<div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
 								<h3 class="tab-title">Product Description</h3>
 								<p>{{$product->$content}}</p>
-{{--
-								<iframe width="100%" height="400" src="https://www.youtube.com/embed/LUH7njvhydE?rel=0&amp;controls=0&amp;showinfo=0"
-								 frameborder="0" allowfullscreen></iframe> --}}
+
 
 
 							</div>
@@ -224,20 +215,25 @@
 				<div class="sidebar">
 					<div class="widget price text-center">
 						<h4>Price</h4>
-						<p>$230</p>
+                        @if ($product->sale_price)
+                            <small><del  style="display: inline-block"> <p>${{$product->price}}</p> </del></small> <p style="display: inline-block">${{$product->sale_price}}</p>
+                        @else
+                        <p>${{$product->price}}</p>
+                        @endif
+
+                        <form action="{{route('site.add_to_cart')}}" method="POST"> @csrf
+                            <input type="hidden" name="product_id" value="{{$product->id}}">
+                            <input type="hidden" name="user_id" value="{{Auth::id()}}">
+                            <div class="product-quantity">
+                                <h4>Quantity</h4>
+                                <div class="product-quantity-slider">
+                                    <input id="product-quantity" type="text" value="1" name="product-quantity">
+                                </div>
+                            </div>
+                            <button class="btn btn-main mt-20">Add To Cart</button>
+                        </form>
 					</div>
-					<!-- User Profile widget -->
-					<div class="widget user text-center">
-						<img class="rounded-circle img-fluid mb-5 px-5" src="{{asset('siteassets/images/user/user-thumb.jpg')}}" alt="">
-						<h4><a href="user-profile.html">Jonathon Andrew</a></h4>
-						<p class="member-time">Member Since Jun 27, 2017</p>
-						<a href="single.html">See all ads</a>
-						<ul class="list-inline mt-20">
-							<li class="list-inline-item"><a href="contact-us.html" class="btn btn-contact d-inline-block  btn-primary px-lg-5 my-1 px-md-3">Contact</a></li>
-							<li class="list-inline-item"><a href="single.html" class="btn btn-offer d-inline-block btn-primary ml-n1 my-1 px-lg-4 px-md-3">Make an
-									offer</a></li>
-						</ul>
-					</div>
+
 					{{-- <!-- Map Widget -->
 					<div class="widget map">
 						<div class="map">
@@ -253,16 +249,7 @@
 						<!-- Rate -->
 						<div class="starrr"></div>
 					</div>
-					<!-- Safety tips widget -->
-					<div class="widget disclaimer">
-						<h5 class="widget-header">Safety Tips</h5>
-						<ul>
-							<li>Meet seller at a public place</li>
-							<li>Check the item before you buy</li>
-							<li>Pay only after collecting the item</li>
-							<li>Pay only after collecting the item</li>
-						</ul>
-					</div>
+
 					<!-- Coupon Widget -->
 					<div class="widget coupon text-center">
 						<!-- Coupon description -->
@@ -270,7 +257,7 @@
 							your fellow users.
 						</p>
 						<!-- Submii button -->
-						<a href="single.html" class="btn btn-transparent-white">Submit Listing</a>
+						<a href="" class="btn btn-transparent-white">Submit Listing</a>
 					</div>
 
 				</div>

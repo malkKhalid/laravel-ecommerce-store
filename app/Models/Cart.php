@@ -7,5 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cart extends Model
 {
+
+    protected $guarded=[];
+
     use HasFactory;
+
+    public function product() {
+        return $this->belongsTo(Product::class)->withDefault();
+    }
+    public function user() {
+        return $this->belongsTo(User::class)->withDefault();
+    }
 }

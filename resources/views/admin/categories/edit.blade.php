@@ -1,6 +1,10 @@
+@php
+use App\Models\Setting;
+$settings = Setting::first();
+@endphp
 
 @extends('admin.master')
-@section('title','Edit Category | '.env('APP_NAME'))
+@section('title','Edit Category | '. $settings->store_name)
 @section('content')
     <!-- Begin Page Content -->
     <div class="container-fluid">

@@ -1,3 +1,7 @@
+@php
+use App\Models\Setting;
+$settings = Setting::first();
+@endphp
 
 @extends('admin.master')
 @section('title','Add New Product | '.env('APP_NAME'))

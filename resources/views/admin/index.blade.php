@@ -1,6 +1,10 @@
+@php
+use App\Models\Setting;
+$settings = Setting::first();
+@endphp
 
 @extends('admin.master')
-@section('title','Dashboard | '.env('APP_NAME'))
+@section('title','Dashboard | '. $settings->store_name)
 @section('content')
     <!-- Begin Page Content -->
     <div class="container-fluid">

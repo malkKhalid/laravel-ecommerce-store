@@ -1,3 +1,8 @@
+@php
+use App\Models\Setting;
+$settings = Setting::first();
+@endphp
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,14 +14,16 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>@yield('title',env('APP_NAME'))</title>
+    <title>@yield('title',$settings->store_name)</title>
 
     <!-- Custom fonts for this template-->
-    <link rel="stylesheet" href="{{ asset('bootstrap/bootstrap.min.css') }}">
     <link href="{{asset('proassets/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ asset('bootstrap/bootstrap.min.css') }}">
+
 
     <!-- Custom styles for this template-->
     <link href="{{asset('proassets/css/sb-admin-2.min.css')}}" rel="stylesheet">
@@ -30,7 +37,7 @@
     </style>
 
     {{-- {{app()->currentLocale()}} --}}
-    {{-- @if(app()->currentLocale()=='ar')
+    @if(app()->currentLocale()=='ar')
         <style>
 
             .topbar .dropdown .dropdown-menu {
@@ -82,7 +89,7 @@
             }
 
         </style>
-    @endif --}}
+    @endif
 
 
 
@@ -101,7 +108,7 @@
                 <div class="sidebar-brand-icon ">
                     <i class="fas fa-store"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">{{env('APP_NAME')}}</div>
+                <div class="sidebar-brand-text mx-3">{{$settings->store_name}}</div>
             </a>
 
             <!-- Divider -->
@@ -147,49 +154,41 @@
                     </div>
                 </div>
             </li>
-            {{-- <!-- Nav Item - Pages Blogs Menu -->
-            <li class="nav-item ">
-                <a class="nav-link collapsed " href="#" data-toggle="collapse" data-target="#collapseBlogs"
-                    aria-expanded="true" aria-controls="collapseBlogs">
-                    <i class="fas fa-fw fa-heart"></i>
-                    <span>{{__('admin.blogs')}}</span>
-                </a>
-                <div id="collapseProducts" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{route('admin.products.index')}}">{{__('admin.all_products')}}</a>
-                        <a class="collapse-item" href="{{route('admin.products.create')}}">{{__('admin.add_new')}}</a>
-                    </div>
-                </div>
-            </li> --}}
 
-             <!-- Nav Item - Reviews -->
-             <li class="nav-item">
-                <a class="nav-link" href="index.html">
-                    <i class="fas fa-fw fa-star"></i>
-                    <span>{{__('admin.reviews')}}</span></a>
-            </li>
+                          <!-- Nav Item - Reviews -->
+                          <li class="nav-item">
+                            <a class="nav-link" href="">
+                                <i class="fas fa-fw fa-star"></i>
+                                <span>{{__('admin.reviews')}}</span></a>
+                        </li>
 
-             <!-- Nav Item - Orders -->
-             <li class="nav-item">
-                <a class="nav-link" href="index.html">
-                    <i class="fas fa-fw fa-shopping-cart"></i>
-                    <span>{{__('admin.orders')}}</span></a>
-            </li>
+                         <!-- Nav Item - Orders -->
+                         <li class="nav-item">
+                            <a class="nav-link" href="{{route('admin.orders.index')}}">
+                                <i class="fas fa-fw fa-shopping-cart"></i>
+                                <span>{{__('admin.orders')}}</span></a>
+                        </li>
 
 
-             <!-- Nav Item - Payments -->
-             <li class="nav-item">
-                <a class="nav-link" href="index.html">
-                    <i class="fas fa-fw fa-money-bill"></i>
-                    <span>{{__('admin.payments')}}</span></a>
-            </li>
+                         <!-- Nav Item - Payments -->
+                         <li class="nav-item">
+                            <a class="nav-link" href="{{route('admin.payments.index')}}">
+                                <i class="fas fa-fw fa-money-bill"></i>
+                                <span>{{__('admin.payments')}}</span></a>
+                        </li>
 
-              <!-- Nav Item - Customers -->
-              <li class="nav-item">
-                <a class="nav-link" href="index.html">
-                    <i class="fas fa-fw fa-users"></i>
-                    <span>{{__('admin.customers')}}</span></a>
-            </li>
+                          <!-- Nav Item - Customers -->
+                          <li class="nav-item">
+                            <a class="nav-link" href="{{route('admin.users.index')}}">
+                                <i class="fas fa-fw fa-users"></i>
+                                <span>{{__('admin.customers')}}</span></a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{route('admin.settings')}}">
+                                <i class="fas fa-cog"></i>
+                                <span>{{__('admin.settings')}}</span></a>
+                        </li>
 
 
 
@@ -226,7 +225,7 @@
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
-                        {{-- <li class="nav-item dropdown no-arrow">
+                        <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                Languages
@@ -240,7 +239,7 @@
                                         </a>
                                 @endforeach
                             </div>
-                        </li> --}}
+                        </li>
 
 
 
@@ -303,25 +302,12 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Jad</span>
-                                {{-- <img class="img-profile rounded-circle"
-                                    src="https://ui-avatars.com/api/?name={{Auth::user()->name}}"> --}}
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{Auth::user()->name}}</span>
+                                <img class="img-profile rounded-circle"
+                                    src="{{asset('uploads/users/'.Auth::user()->image)}}">
                             </a>
-                            <!-- Dropdown - User Information -->
-                            {{-- <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                   onclick="event.preventDefault();
-                                                 document.getElementById('logout-form').submit();">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> {{ __('Logout') }}
-                                </a>
 
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                    @csrf
-                                </form>
-                            </div> --}}
-
-
-                            {{-- <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
 
                                 <a class="dropdown-item" href="{{ route('logout') }}"
@@ -333,7 +319,7 @@
                              <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                  @csrf
                              </form>
-                            </div> --}}
+                            </div>
                         </li>
 
                     </ul>
@@ -352,7 +338,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; {{env('APP_NAME')}} {{date('Y')}} </span>
+                        <span>Copyright &copy; {{$settings->store_name }} {{date('Y')}} </span>
                     </div>
                 </div>
             </footer>
@@ -370,7 +356,6 @@
     </a>
 
 
-
     <!-- Bootstrap core JavaScript-->
     <script src="{{asset('proassets/vendor/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('proassets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
@@ -380,6 +365,8 @@
 
     <!-- Custom scripts for all pages-->
     <script src="{{asset('proassets/js/sb-admin-2.min.js')}}"></script>
+    <script src="{{asset('bootstrap/bootstrap.min.js')}}"></script>
+
 
 </body>
 

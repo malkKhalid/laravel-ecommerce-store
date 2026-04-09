@@ -1,6 +1,10 @@
+@php
+use App\Models\Setting;
+$settings = Setting::first();
+@endphp
 
 @extends('admin.master')
-@section('title','All Categories | '.env('APP_NAME'))
+@section('title','All Categories | '. $settings->store_name)
 @section('content')
     <!-- Begin Page Content -->
     <div class="container-fluid">
@@ -37,7 +41,7 @@
                     <td>{{$category->created_at->format('d/m/Y')}}</td>
                     <td>{{$category->updated_at->diffForhumans()}}</td>
                     <td>
-                        <a href="{{route('admin.categories.show',$category->id)}}" class="btn btn-success btn-sm"> <i class="fas fa-eye"></i></a>
+                        <a target="blank" href="{{route('site.category',$category->id)}}" class="btn btn-success btn-sm"> <i class="fas fa-eye"></i></a>
                         <a href="{{route('admin.categories.edit',$category->id)}}" class="btn btn-primary btn-sm"> <i class="fas fa-edit"></i></a>
                         <form class="d-inline" action="{{route('admin.categories.destroy' , $category->id)}}" method="POST">
                             @csrf

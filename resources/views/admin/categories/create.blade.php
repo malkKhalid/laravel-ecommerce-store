@@ -1,6 +1,10 @@
+@php
+use App\Models\Setting;
+$settings = Setting::first();
+@endphp
 
 @extends('admin.master')
-@section('title','Add New Category | '.env('APP_NAME'))
+@section('title','Add New Category | '. $settings->store_name)
 @section('content')
     <!-- Begin Page Content -->
     <div class="container-fluid">
@@ -12,7 +16,7 @@
             @csrf
 
             @include('admin.categories.form')
-            
+
             <button class="btn btn-success px-5">Add New</button>
         </form>
 

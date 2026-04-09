@@ -1,4 +1,14 @@
+
+@php
+use App\Models\Category;
+use App\Models\Setting;
+$settings = Setting::first();
+@endphp
+
 @extends('site.master')
+
+@section('title',"Products | " . $settings->store_name)
+
 
 @section('content')
 
@@ -57,12 +67,11 @@
             <div class="col-lg-3 col-md-4">
                 <div class="category-sidebar">
                     <div class="widget category-list">
-                        <h4 class="widget-header">All Category</h4>
+                        <h4 class="widget-header"><a href="{{route('site.all_category')}}">All Category</a></h4>
                         <ul class="category-list">
-                            <li><a href="category.html">Laptops <span>93</span></a></li>
-                            <li><a href="category.html">Iphone <span>233</span></a></li>
-                            <li><a href="category.html">Microsoft <span>183</span></a></li>
-                            <li><a href="category.html">Monitors <span>343</span></a></li>
+                            @foreach ($categories as $category)
+                                <li><a href="{{route('site.category',$category->id )}}">{{$category->$name}} <span>{{$category->products->count()}}</span></a></li>
+                            @endforeach
                         </ul>
                     </div>
 
@@ -168,7 +177,7 @@
                                         <div class="thumb-content">
                                             <!-- <div class="price">$200</div> -->
                                             <a href="{{route('site.product',$product->id )}}">
-                                                <img  class="card-img-top img-fluid" src="{{asset('uploads/products/'. $product->image )}}"
+                                                <img style="width: 100% ; height: 300px ; object-fit:cover " class="card-img-top img-fluid" src="{{asset('uploads/products/'. $product->image )}}"
                                                     alt="Card image cap">
                                             </a>
                                         </div>
